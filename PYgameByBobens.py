@@ -104,6 +104,7 @@ sense.stick.direction_right = pushed_right
 
 def gameloop():
     Hindernis1 = Hindernis()
+    score = 0
     while True:
         Hindernis1.move()
         sense.clear()
@@ -116,6 +117,11 @@ def gameloop():
                 # Check collision with player
                 sense.show_message("Game Over!", text_colour=(255, 0, 0))
                 break
+
+        else:
+            score += 1
+            sense.show_message(str(score))
+            break
 
         if Hindernis1.y >= 7:
             Hindernis1 = Hindernis()
