@@ -4,7 +4,6 @@ import random
 from sense_hat import SenseHat, ACTION_PRESSED, ACTION_HELD, ACTION_RELEASED
 from signal import pause
 
-
 Y = (255, 255, 0)
 O = (0, 0, 0)
 T = (0, 180, 220)
@@ -107,19 +106,21 @@ def gameloop():
     Hindernis1 = Hindernis()
     while True:
         Hindernis1.move()
-        time.sleep(0.3)
         sense.clear()
         draw_player()
 
         draw_Hindernis(Hindernis1)
 
+        if y == Hindernis1.y:
+            if not (x == Hindernis1.Loch - 1 or x == Hindernis1.Loch or x == Hindernis1.Loch + 1):
+                # Check collision with player
+                sense.show_message("Game Over!", text_colour=(255, 0, 0))
+                break
+
         if Hindernis1.y >= 7:
             Hindernis1 = Hindernis()
 
+        time.sleep(0.3)
 
-        if Hindernis1.y == y and (Hindernis1.Loch - 1 <= x <= Hindernis1.Loch + 1):
-            # Check collision with player
-            sense.show_message("Game Over!", text_colour=(255, 0, 0))
-            break
 
 gameloop()
