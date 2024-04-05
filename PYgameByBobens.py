@@ -70,10 +70,6 @@ def pushed_right(event):
 # Controls end-----------------------------------------------------------------------------------------
 
 # Drawing starts-------------------------------------------------------------------------------------
-def draw_player():
-    sense.clear()
-    sense.set_pixel(x, y, 255, 255, 255)
-
 
 def draw_Hindernis(Objekt):
     for i in range(8):
@@ -88,12 +84,7 @@ def draw_Hindernis(Objekt):
 
 def refresh():
     sense.clear()
-    sense.set_pixel(clamp(x), clamp(y), 255, 255, 255)
-
-
-# Adjusted clamp function to include bounday values
-def clamp(value, min_value=0, max_value=7):
-    return min(max_value, max(min_value, value))
+    sense.set_pixel(x, y, 255, 255, 255)
 
 
 sense.stick.direction_up = pushed_up
@@ -105,23 +96,21 @@ sense.stick.direction_right = pushed_right
 def gameloop():
     Hindernis1 = Hindernis()
     score = 0
+
     while True:
         Hindernis1.move()
-        sense.clear()
-        draw_player()
-
+        refresh()  # Spielfeld und Spieler
         draw_Hindernis(Hindernis1)
 
-        if y == Hindernis1.y:
+        if y == Hindernis1.y:  # collision check
             if not (x == Hindernis1.Loch - 1 or x == Hindernis1.Loch or x == Hindernis1.Loch + 1):
                 # Check collision with player
-                sense.show_message("Game Over!", text_colour=(255, 0, 0))
+                sense.show_message(str(score), 0.05, text_colour=(155, 100, 0))
+
                 break
 
-        else:
+        if (x == Hindernis1.Loch - 1 or x == Hindernis1.Loch or x == Hindernis1.Loch + 1):
             score += 1
-            sense.show_message(str(score))
-            break
 
         if Hindernis1.y >= 7:
             Hindernis1 = Hindernis()
@@ -130,3 +119,18 @@ def gameloop():
 
 
 gameloop()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
