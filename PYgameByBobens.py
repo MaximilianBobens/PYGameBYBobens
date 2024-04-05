@@ -108,14 +108,15 @@ def gameloop():
                 # Check collision with player
                 sense.show_message(str(score), 0.04, text_colour=(155, 100, 0))
                 break
+            else:
+              score += 1
 
-        if (x == Hindernis1.Loch - 1 or x == Hindernis1.Loch or x == Hindernis1.Loch + 1):
-            score += 1
 
         if Hindernis1.y >= 7:
             Hindernis1 = Hindernis()
 
         time.sleep(0.3)
+        print(score)
 
 
 gameloop()
